@@ -4,15 +4,16 @@
   "version": "1.0.0",
   "description": "[![Actions Status](https://github.com/0ksanaTkachenko/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/0ksanaTkachenko/frontend-project-46/actions)",
   "bin": {
-    "gendiff": "bin/gendiff.js"
+    "gendiff": "src/genDiff.js"
   },
-  "main": "index.js",
+  "main": "bin/gendiff.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "^11.1.0"
+    "commander": "^11.1.0",
+    "lodash": "^4.17.21"
   }
 }
