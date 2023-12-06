@@ -1,4 +1,4 @@
-import dataParse from '../src/parseData';
+import dataParse from '../src/parseData.js';
 
 const file1 = {
   host: 'hexlet.io',
