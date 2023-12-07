@@ -8,8 +8,8 @@ env:
 
 extends:
   - 'airbnb-base'
-  # - "prettier"
-  # - "plugin:jest/recommended"
+  - 'prettier'
+  - 'plugin:jest/recommended'
 
 parserOptions:
   ecmaVersion: latest
