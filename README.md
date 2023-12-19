@@ -9,3 +9,4 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/94a1b56d2f5284215651/test_coverage)](https://codeclimate.com/github/0ksanaTkachenko/frontend-project-46/test_coverage)
 
 Finding differences between two flat json files: https://asciinema.org/a/625382
+Finding differences between two flat yaml/yml files: https://asciinema.org/a/627608
