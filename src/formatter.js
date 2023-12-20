@@ -1,26 +1,38 @@
+import _ from 'lodash';
+
 const getSign = (state) => {
-  if (state === 'deleted') {
-    return '- ';
-  }
+  const signs = {
+    deleted: '- ',
+    added: '+ ',
+  };
 
-  if (state === 'added') {
-    return '+ ';
-  }
-
-  if (state === 'not changed') {
-    return '  ';
-  }
-  return '';
+  return signs[state] || '  ';
 };
 
-const spaces = '  ';
+const formatter = (gendiffResult, nestingLevel = 1) => {
+  const indentSize = 4;
+  const leftShift = 2;
+  const beginningSpaces = ' '.repeat(nestingLevel * indentSize - leftShift);
+  const spacesСlosingIndent = ' '.repeat((nestingLevel - 1) * indentSize);
 
-const formatter = (gendiffResult) => {
-  const data = gendiffResult
-    .map((item) => `${spaces}${getSign(item.state)}${item.key}: ${item.value}`)
-    .join('\n');
+  const formattedResult = _.map(gendiffResult, (item) => {
+    if (_.isArray(item.value)) {
+      const nestedResult = formatter(item.value, nestingLevel + 1);
+      return `${beginningSpaces}${getSign(item.state)}${item.key}: ${nestedResult}`;
+    }
 
-  return `{\n${data}\n}`;
+    if (_.isObject(item.value)) {
+      const objectAsArray = _.map(item.value, (val, key) => ({ key, value: val }));
+      return `${beginningSpaces}${getSign(item.state)}${item.key}: ${formatter(
+        objectAsArray,
+        nestingLevel + 1,
+      )}`;
+    }
+
+    return `${beginningSpaces}${getSign(item.state)}${item.key}: ${item.value}`;
+  });
+
+  return `{\n${formattedResult.join('\n')}\n${spacesСlosingIndent}}`;
 };
 
 export default formatter;

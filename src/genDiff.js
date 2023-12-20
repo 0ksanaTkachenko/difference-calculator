@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import path from 'path';
 import fs from 'fs';
+// import util from 'util';
 import dataParse from './parseData.js';
 import formatter from './formatter.js';
 
@@ -19,25 +20,43 @@ const genDiff = (filePath1, filePath2) => {
   const parsedData1 = dataParse(readFile1Result, file1Format);
   const parsedData2 = dataParse(readFile2Result, file2Format);
 
-  const keys = _.union(_.keys(parsedData1), _.keys(parsedData2)).sort();
+  const makeCompareFiles = (data1, data2) => {
+    const keys = _.union(_.keys(data1), _.keys(data2)).sort();
 
-  const gendiffResult = keys.reduce((acc, dataKey) => {
-    if (parsedData1[dataKey] === parsedData2[dataKey]) {
-      acc.push({ key: dataKey, value: parsedData1[dataKey], state: 'not changed' });
-    } else {
-      if (Object.hasOwn(parsedData1, dataKey)) {
-        acc.push({ key: dataKey, value: parsedData1[dataKey], state: 'deleted' });
+    return keys.reduce((acc, dataKey) => {
+      if (_.isObject(data1[dataKey]) && _.isObject(data2[dataKey])) {
+        acc.push({
+          key: dataKey,
+          value: makeCompareFiles(data1[dataKey], data2[dataKey]),
+          state: 'nested',
+        });
+      } else if (_.isEqual(data1[dataKey], data2[dataKey])) {
+        acc.push({ key: dataKey, value: data1[dataKey], state: 'not changed' });
+      } else {
+        if (Object.hasOwn(data1, dataKey)) {
+          acc.push({ key: dataKey, value: data1[dataKey], state: 'deleted' });
+        }
+        if (Object.hasOwn(data2, dataKey)) {
+          acc.push({ key: dataKey, value: data2[dataKey], state: 'added' });
+        }
       }
-      if (Object.hasOwn(parsedData2, dataKey)) {
-        acc.push({ key: dataKey, value: parsedData2[dataKey], state: 'added' });
-      }
-    }
-    return acc;
-  }, []);
 
+      return acc;
+    }, []);
+  };
+
+  const gendiffResult = makeCompareFiles(parsedData1, parsedData2);
   const formatedResult = formatter(gendiffResult);
 
-  console.log(formatedResult);
+  // console.log(
+  //   util.inspect(gendiffResult, { showHidden: false, depth: null, colors: true }),
+  // );
+
+  // console.log(
+  //   util.inspect(formatedResult, { showHidden: false, depth: null, colors: true }),
+  // );
+
+  // console.log(formatedResult);
   return formatedResult;
 };
 
