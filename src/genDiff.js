@@ -38,7 +38,7 @@ const compareData = (data1, data2) => {
 
 // Основная функция для генерации различий
 
-const genDiff = (filePath1, filePath2) => {
+const genDiff = (filePath1, filePath2, format = 'stylish') => {
   const file1Content = fileReader(filePath1);
   const file2Content = fileReader(filePath2);
 
@@ -49,7 +49,7 @@ const genDiff = (filePath1, filePath2) => {
   const parsedData2 = dataParse(file2Content, file2Format);
 
   const diffResult = compareData(parsedData1, parsedData2);
-  const formatedResult = formatter(diffResult);
+  const formatedResult = formatter(diffResult, format);
 
   console.log(formatedResult);
   return formatedResult;
