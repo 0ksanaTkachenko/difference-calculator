@@ -36,7 +36,6 @@ const stylish = (gendiffResult, nestingLevel = 1) => {
 };
 
 const formatter = (gendiffResult, format) => {
-  console.log(format);
   if (format === 'stylish') {
     return stylish(gendiffResult);
   }
