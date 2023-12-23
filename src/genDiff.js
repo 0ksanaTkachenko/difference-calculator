@@ -2,41 +2,47 @@ import _ from 'lodash';
 import path from 'path';
 import fs from 'fs';
 import dataParse from './parseData.js';
-import formatter from './formatter.js';
+import formatter from './formatters/index.js';
 
 const fileReader = (filepath) => {
   const absolutePath = path.resolve(process.cwd(), filepath);
   return fs.readFileSync(absolutePath, 'utf8');
 };
 
-// Функция для сравнения двух объектов данных
+const objectMaker = (key, value, state) => {
+  if (state === 'updated') {
+    const [oldValue, newValue] = value;
+    return { key, oldValue, newValue, state };
+  }
+  return { key, state, value };
+};
 
 const compareData = (data1, data2) => {
   const keys = _.union(_.keys(data1), _.keys(data2)).sort();
 
-  return keys.reduce((acc, key) => {
+  return keys.map((key) => {
     if (_.isObject(data1[key]) && _.isObject(data2[key])) {
-      acc.push({
-        key,
-        value: compareData(data1[key], data2[key]),
-        state: 'nested',
-      });
-    } else if (_.isEqual(data1[key], data2[key])) {
-      acc.push({ key, value: data1[key], state: 'not changed' });
-    } else {
-      if (Object.hasOwn(data1, key)) {
-        acc.push({ key, value: data1[key], state: 'deleted' });
-      }
-      if (Object.hasOwn(data2, key)) {
-        acc.push({ key, value: data2[key], state: 'added' });
-      }
+      return objectMaker(key, compareData(data1[key], data2[key]), 'nested');
     }
 
-    return acc;
-  }, []);
-};
+    if (_.isEqual(data1[key], data2[key])) {
+      return objectMaker(key, data1[key], 'not changed');
+    }
 
-// Основная функция для генерации различий
+    if (Object.hasOwn(data1, key) && Object.hasOwn(data2, key)) {
+      return objectMaker(key, [data1[key], data2[key]], 'updated');
+    }
+
+    if (Object.hasOwn(data1, key)) {
+      return objectMaker(key, data1[key], 'removed');
+    }
+
+    if (Object.hasOwn(data2, key)) {
+      return objectMaker(key, data2[key], 'added');
+    }
+    return '';
+  });
+};
 
 const genDiff = (filePath1, filePath2, format = 'stylish') => {
   const file1Content = fileReader(filePath1);

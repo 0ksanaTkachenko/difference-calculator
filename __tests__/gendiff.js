@@ -14,19 +14,21 @@ const getExpectedOutput = (filename) => {
 };
 
 describe('genDiff', () => {
-  const expectedOutput = getExpectedOutput('expectedOutput.txt');
+  const expectedStylish = getExpectedOutput('expectedStylish.txt');
+  const expectedPlain = getExpectedOutput('expectedPlain.txt');
 
   it('должен корректно сравнивать два JSON-файла', () => {
     const filePath1 = getFixturePath('file1.json');
     const filePath2 = getFixturePath('file2.json');
 
-    expect(genDiff(filePath1, filePath2)).toBe(expectedOutput);
+    expect(genDiff(filePath1, filePath2, 'stylish')).toBe(expectedStylish);
+    expect(genDiff(filePath1, filePath2, 'plain')).toBe(expectedPlain);
   });
 
   it('должен корректно сравнивать два yaml-файла', () => {
     const filePath1 = getFixturePath('file1.yaml');
     const filePath2 = getFixturePath('file2.yaml');
 
-    expect(genDiff(filePath1, filePath2)).toBe(expectedOutput);
+    expect(genDiff(filePath1, filePath2, 'stylish')).toBe(expectedStylish);
   });
 });
