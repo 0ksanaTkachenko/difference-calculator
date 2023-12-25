@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import path from 'path';
 import fs from 'fs';
-import dataParse from './parseData.js';
-import formatter from './formatters/index.js';
+import dataParse from '../src/parseData.js';
+import formatter from '../src/formatters/index.js';
 
 const fileReader = (filepath) => {
   const absolutePath = path.resolve(process.cwd(), filepath);
