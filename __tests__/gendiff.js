@@ -14,49 +14,66 @@ const getExpectedOutput = (filename) => {
 };
 
 describe('genDiff', () => {
-  let filePathJson1;
-  let filePathJson2;
-  let filePathYaml1;
-  let filePathYaml2;
-  let filePathYml1;
-  let filePathYml2;
-  let expectedStylish;
-  let expectedPlain;
-  let expectedJson;
+  const paths = {};
+  const expectResult = {};
 
   beforeEach(() => {
-    filePathJson1 = getFixturePath('file1.json');
-    filePathJson2 = getFixturePath('file2.json');
-    filePathYaml1 = getFixturePath('file1.yaml');
-    filePathYaml2 = getFixturePath('file2.yaml');
-    filePathYml1 = getFixturePath('file1.yml');
-    filePathYml2 = getFixturePath('file2.yml');
-    expectedStylish = getExpectedOutput('expectedStylish.txt');
-    expectedPlain = getExpectedOutput('expectedPlain.txt');
-    expectedJson = getExpectedOutput('expectedJson.txt');
+    paths.filePathJson1 = getFixturePath('file1.json');
+    paths.filePathJson2 = getFixturePath('file2.json');
+    paths.filePathYaml1 = getFixturePath('file1.yaml');
+    paths.filePathYaml2 = getFixturePath('file2.yaml');
+    paths.filePathYml1 = getFixturePath('file1.yml');
+    paths.filePathYml2 = getFixturePath('file2.yml');
+    expectResult.expectedStylish = getExpectedOutput('expectedStylish.txt');
+    expectResult.expectedPlain = getExpectedOutput('expectedPlain.txt');
+    expectResult.expectedJson = getExpectedOutput('expectedJson.txt');
   });
 
   it('должен корректно сравнивать два файла без указания формата', () => {
-    expect(genDiff(filePathJson1, filePathJson2)).toBe(expectedStylish);
-    expect(genDiff(filePathYaml1, filePathYaml2)).toBe(expectedStylish);
-    expect(genDiff(filePathYml1, filePathYml2)).toBe(expectedStylish);
+    expect(genDiff(paths.filePathJson1, paths.filePathJson2)).toBe(
+      expectResult.expectedStylish,
+    );
+    expect(genDiff(paths.filePathYaml1, paths.filePathYaml2)).toBe(
+      expectResult.expectedStylish,
+    );
+    expect(genDiff(paths.filePathYml1, paths.filePathYml2)).toBe(
+      expectResult.expectedStylish,
+    );
   });
 
   it('должен корректно сравнивать два файла с указанным форматом вывода stylish', () => {
-    expect(genDiff(filePathJson1, filePathJson2, 'stylish')).toBe(expectedStylish);
-    expect(genDiff(filePathYaml1, filePathYaml2, 'stylish')).toBe(expectedStylish);
-    expect(genDiff(filePathYml1, filePathYml2, 'stylish')).toBe(expectedStylish);
+    expect(genDiff(paths.filePathJson1, paths.filePathJson2, 'stylish')).toBe(
+      expectResult.expectedStylish,
+    );
+    expect(genDiff(paths.filePathYaml1, paths.filePathYaml2, 'stylish')).toBe(
+      expectResult.expectedStylish,
+    );
+    expect(genDiff(paths.filePathYml1, paths.filePathYml2, 'stylish')).toBe(
+      expectResult.expectedStylish,
+    );
   });
 
   it('должен корректно сравнивать два файла с указанным форматом вывода plain', () => {
-    expect(genDiff(filePathJson1, filePathJson2, 'plain')).toBe(expectedPlain);
-    expect(genDiff(filePathYaml1, filePathYaml2, 'plain')).toBe(expectedPlain);
-    expect(genDiff(filePathYml1, filePathYml2, 'plain')).toBe(expectedPlain);
+    expect(genDiff(paths.filePathJson1, paths.filePathJson2, 'plain')).toBe(
+      expectResult.expectedPlain,
+    );
+    expect(genDiff(paths.filePathYaml1, paths.filePathYaml2, 'plain')).toBe(
+      expectResult.expectedPlain,
+    );
+    expect(genDiff(paths.filePathYml1, paths.filePathYml2, 'plain')).toBe(
+      expectResult.expectedPlain,
+    );
   });
 
   it('должен корректно сравнивать два файла с указанным форматом вывода json', () => {
-    expect(genDiff(filePathJson1, filePathJson2, 'json')).toBe(expectedJson);
-    expect(genDiff(filePathYaml1, filePathYaml2, 'json')).toBe(expectedJson);
-    expect(genDiff(filePathYml1, filePathYml2, 'json')).toBe(expectedJson);
+    expect(genDiff(paths.filePathJson1, paths.filePathJson2, 'json')).toBe(
+      expectResult.expectedJson,
+    );
+    expect(genDiff(paths.filePathYaml1, paths.filePathYaml2, 'json')).toBe(
+      expectResult.expectedJson,
+    );
+    expect(genDiff(paths.filePathYml1, paths.filePathYml2, 'json')).toBe(
+      expectResult.expectedJson,
+    );
   });
 });
