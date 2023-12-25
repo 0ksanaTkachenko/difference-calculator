@@ -15,13 +15,22 @@ const fileReader = (filepath) => {
 const objectMaker = (key, value, state) => {
   if (state === 'updated') {
     const [oldValue, newValue] = value;
-    return { key, oldValue, newValue, state };
+    return {
+      key,
+      oldValue,
+      newValue,
+      state,
+    };
   }
-  return { key, state, value };
+  return {
+    key,
+    state,
+    value,
+  };
 };
 
 const compareData = (data1, data2) => {
-  const keys = _.union(_.keys(data1), _.keys(data2)).sort();
+  const keys = _.sortBy(_.union(_.keys(data1), _.keys(data2)));
 
   return keys.map((key) => {
     if (_.isObject(data1[key]) && _.isObject(data2[key])) {
