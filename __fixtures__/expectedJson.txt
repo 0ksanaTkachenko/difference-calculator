@@ -1,0 +1,116 @@
+[
+  {
+    "key": "common",
+    "state": "nested",
+    "value": [
+      {
+        "key": "follow",
+        "state": "added",
+        "value": false
+      },
+      {
+        "key": "setting1",
+        "state": "not changed",
+        "value": "Value 1"
+      },
+      {
+        "key": "setting2",
+        "state": "removed",
+        "value": 200
+      },
+      {
+        "key": "setting3",
+        "oldValue": true,
+        "newValue": null,
+        "state": "updated"
+      },
+      {
+        "key": "setting4",
+        "state": "added",
+        "value": "blah blah"
+      },
+      {
+        "key": "setting5",
+        "state": "added",
+        "value": {
+          "key5": "value5"
+        }
+      },
+      {
+        "key": "setting6",
+        "state": "nested",
+        "value": [
+          {
+            "key": "doge",
+            "state": "nested",
+            "value": [
+              {
+                "key": "wow",
+                "oldValue": "",
+                "newValue": "so much",
+                "state": "updated"
+              }
+            ]
+          },
+          {
+            "key": "key",
+            "state": "not changed",
+            "value": "value"
+          },
+          {
+            "key": "ops",
+            "state": "added",
+            "value": "vops"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "group1",
+    "state": "nested",
+    "value": [
+      {
+        "key": "baz",
+        "oldValue": "bas",
+        "newValue": "bars",
+        "state": "updated"
+      },
+      {
+        "key": "foo",
+        "state": "not changed",
+        "value": "bar"
+      },
+      {
+        "key": "nest",
+        "oldValue": {
+          "key": "value"
+        },
+        "newValue": "str",
+        "state": "updated"
+      }
+    ]
+  },
+  {
+    "key": "group2",
+    "state": "removed",
+    "value": {
+      "abc": 12345,
+      "deep": {
+        "id": 45
+      }
+    }
+  },
+  {
+    "key": "group3",
+    "state": "added",
+    "value": {
+      "deep": {
+        "id": {
+          "number": 45
+        }
+      },
+      "fee": 100500
+    }
+  }
+]

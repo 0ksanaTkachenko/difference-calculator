@@ -14,21 +14,41 @@ const getExpectedOutput = (filename) => {
 };
 
 describe('genDiff', () => {
-  const expectedStylish = getExpectedOutput('expectedStylish.txt');
-  const expectedPlain = getExpectedOutput('expectedPlain.txt');
+  let filePathJson1;
+  let filePathJson2;
+  let filePathYaml1;
+  let filePathYaml2;
+  let expectedStylish;
+  let expectedPlain;
+  let expectedJson;
 
-  it('должен корректно сравнивать два JSON-файла', () => {
-    const filePath1 = getFixturePath('file1.json');
-    const filePath2 = getFixturePath('file2.json');
-
-    expect(genDiff(filePath1, filePath2, 'stylish')).toBe(expectedStylish);
-    expect(genDiff(filePath1, filePath2, 'plain')).toBe(expectedPlain);
+  beforeEach(() => {
+    filePathJson1 = getFixturePath('file1.json');
+    filePathJson2 = getFixturePath('file2.json');
+    filePathYaml1 = getFixturePath('file1.yaml');
+    filePathYaml2 = getFixturePath('file2.yaml');
+    expectedStylish = getExpectedOutput('expectedStylish.txt');
+    expectedPlain = getExpectedOutput('expectedPlain.txt');
+    expectedJson = getExpectedOutput('expectedJson.txt');
   });
 
-  it('должен корректно сравнивать два yaml-файла', () => {
-    const filePath1 = getFixturePath('file1.yaml');
-    const filePath2 = getFixturePath('file2.yaml');
+  it('должен корректно сравнивать два файла без указания формата', () => {
+    expect(genDiff(filePathJson1, filePathJson2)).toBe(expectedStylish);
+    expect(genDiff(filePathYaml1, filePathYaml2)).toBe(expectedStylish);
+  });
 
-    expect(genDiff(filePath1, filePath2, 'stylish')).toBe(expectedStylish);
+  it('должен корректно сравнивать два файла с указанным форматом вывода stylish', () => {
+    expect(genDiff(filePathJson1, filePathJson2, 'stylish')).toBe(expectedStylish);
+    expect(genDiff(filePathYaml1, filePathYaml2, 'stylish')).toBe(expectedStylish);
+  });
+
+  it('должен корректно сравнивать два файла с указанным форматом вывода plain', () => {
+    expect(genDiff(filePathJson1, filePathJson2, 'plain')).toBe(expectedPlain);
+    expect(genDiff(filePathYaml1, filePathYaml2, 'plain')).toBe(expectedPlain);
+  });
+
+  it('должен корректно сравнивать два файла с указанным форматом вывода json', () => {
+    expect(genDiff(filePathJson1, filePathJson2, 'json')).toBe(expectedJson);
+    expect(genDiff(filePathYaml1, filePathYaml2, 'json')).toBe(expectedJson);
   });
 });

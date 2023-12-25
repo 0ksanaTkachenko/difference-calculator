@@ -1,5 +1,6 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
+import jsonFormat from './json.js';
 
 const formatter = (gendiffResult, format) => {
   if (format === 'stylish') {
@@ -8,6 +9,10 @@ const formatter = (gendiffResult, format) => {
 
   if (format === 'plain') {
     return plain(gendiffResult);
+  }
+
+  if (format === 'json') {
+    return jsonFormat(gendiffResult);
   }
 
   return '';
