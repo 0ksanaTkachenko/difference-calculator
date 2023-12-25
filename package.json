@@ -6,7 +6,7 @@
   "bin": {
     "gendiff": "src/genDiff.js"
   },
-  "main": "bin/gendiff.js",
+  "main": "bin/index.js",
   "scripts": {
     "test": "npx jest"
   },
