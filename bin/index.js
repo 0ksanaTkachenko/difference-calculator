@@ -5,7 +5,10 @@ import dataParse from '../src/parseData.js';
 import formatter from '../src/formatters/index.js';
 
 const fileReader = (filepath) => {
-  const absolutePath = path.resolve(process.cwd(), filepath);
+  const absolutePath = path.isAbsolute(filepath)
+    ? filepath
+    : path.resolve(process.cwd(), filepath);
+
   return fs.readFileSync(absolutePath, 'utf8');
 };
 
