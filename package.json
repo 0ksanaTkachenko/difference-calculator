@@ -2,7 +2,7 @@
   "name": "@hexlet/code",
   "type": "module",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/0ksanaTkachenko/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/0ksanaTkachenko/frontend-project-46/actions)",
+  "description": "[![Actions Status](https://github.com/0ksanaTkachenko/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/0ksanaTkachenko/frontend-project-46/actions) A program and library for comparing and identifying differences between two files. It supports various output formats and can be used as an NPM dependency.",
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
