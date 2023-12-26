@@ -1,46 +1,32 @@
 import _ from 'lodash';
 
-const chooseItemValueFormat = (value) => {
-  switch (true) {
-    case typeof value === 'string':
-      return `'${value}'`;
-    case value === null:
-      return 'null';
-    case typeof value === 'object':
-      return '[complex value]';
-    default:
-      return value;
-  }
+const ValueFormat = (value) => {
+  const format = {
+    string: `'${value}'`,
+    object: value === null ? 'null' : '[complex value]',
+  };
+  return format[typeof value] || value;
 };
 
 const formatDiffItem = (item, currentPath) => {
-  switch (item.state) {
-    case 'updated': {
-      const itemOldValue = chooseItemValueFormat(item.oldValue);
-      const itemNewValue = chooseItemValueFormat(item.newValue);
-      return `Property '${currentPath}' was updated. From ${itemOldValue} to ${itemNewValue}`;
-    }
-    case 'added': {
-      const itemValue = chooseItemValueFormat(item.value);
-      return `Property '${currentPath}' was added with value: ${itemValue}`;
-    }
-    case 'removed':
-      return `Property '${currentPath}' was removed`;
-
-    case 'not changed':
-      return [];
-
-    default:
-      return '';
-  }
+  const line = {
+    updated: `Property '${currentPath}' was updated. From ${ValueFormat(
+      item.oldValue,
+    )} to ${ValueFormat(item.newValue)}`,
+    added: `Property '${currentPath}' was added with value: ${ValueFormat(item.value)}`,
+    removed: `Property '${currentPath}' was removed`,
+    'not changed': [],
+  };
+  return line[item.state];
 };
 
 const plain = (gendiffResult, parentPath = '') => {
   const formattedResult = _.flatMap(gendiffResult, (item) => {
     const currentPath = parentPath === '' ? item.key : `${parentPath}.${item.key}`;
 
-    if (_.isArray(item.value)) {
-      return plain(item.value, currentPath);
+    if (item.state === 'nested') {
+      const children = item.value;
+      return plain(children, currentPath);
     }
 
     return formatDiffItem(item, currentPath);

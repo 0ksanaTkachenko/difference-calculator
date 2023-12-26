@@ -4,24 +4,20 @@ import fs from 'fs';
 import dataParse from '../src/parseData.js';
 import formatter from '../src/formatters/index.js';
 
-const fileReader = (filepath) => {
-  const absolutePath = path.isAbsolute(filepath)
-    ? filepath
-    : path.resolve(process.cwd(), filepath);
-
-  return fs.readFileSync(absolutePath, 'utf8');
-};
+const fileReader = (filepath) =>
+  fs.readFileSync(path.resolve(process.cwd(), filepath), 'utf8');
 
 const objectMaker = (key, value, state) => {
   if (state === 'updated') {
     const [oldValue, newValue] = value;
     return {
       key,
+      state,
       oldValue,
       newValue,
-      state,
     };
   }
+
   return {
     key,
     state,
@@ -41,18 +37,17 @@ const compareData = (data1, data2) => {
       return objectMaker(key, data1[key], 'not changed');
     }
 
-    if (Object.hasOwn(data1, key) && Object.hasOwn(data2, key)) {
+    if (_.has(data1, key) && _.has(data2, key)) {
       return objectMaker(key, [data1[key], data2[key]], 'updated');
     }
 
-    if (Object.hasOwn(data1, key)) {
+    if (_.has(data1, key)) {
       return objectMaker(key, data1[key], 'removed');
     }
 
-    if (Object.hasOwn(data2, key)) {
-      return objectMaker(key, data2[key], 'added');
-    }
-    return '';
+    return _.has(data1, key)
+      ? objectMaker(key, data1[key], 'removed')
+      : objectMaker(key, data2[key], 'added');
   });
 };
 
@@ -60,17 +55,12 @@ const genDiff = (filePath1, filePath2, format = 'stylish') => {
   const file1Content = fileReader(filePath1);
   const file2Content = fileReader(filePath2);
 
-  const file1Format = path.extname(filePath1);
-  const file2Format = path.extname(filePath2);
-
-  const parsedData1 = dataParse(file1Content, file1Format);
-  const parsedData2 = dataParse(file2Content, file2Format);
+  const parsedData1 = dataParse(file1Content, path.extname(filePath1));
+  const parsedData2 = dataParse(file2Content, path.extname(filePath2));
 
   const diffResult = compareData(parsedData1, parsedData2);
-  const formatedResult = formatter(diffResult, format);
 
-  console.log(formatedResult);
-  return formatedResult;
+  return formatter(diffResult, format);
 };
 
 export default genDiff;

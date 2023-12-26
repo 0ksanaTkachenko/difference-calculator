@@ -20,9 +20,9 @@
       },
       {
         "key": "setting3",
+        "state": "updated",
         "oldValue": true,
-        "newValue": null,
-        "state": "updated"
+        "newValue": null
       },
       {
         "key": "setting4",
@@ -46,9 +46,9 @@
             "value": [
               {
                 "key": "wow",
+                "state": "updated",
                 "oldValue": "",
-                "newValue": "so much",
-                "state": "updated"
+                "newValue": "so much"
               }
             ]
           },
@@ -72,9 +72,9 @@
     "value": [
       {
         "key": "baz",
+        "state": "updated",
         "oldValue": "bas",
-        "newValue": "bars",
-        "state": "updated"
+        "newValue": "bars"
       },
       {
         "key": "foo",
@@ -83,11 +83,11 @@
       },
       {
         "key": "nest",
+        "state": "updated",
         "oldValue": {
           "key": "value"
         },
-        "newValue": "str",
-        "state": "updated"
+        "newValue": "str"
       }
     ]
   },

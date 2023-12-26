@@ -1,3 +1,3 @@
-const jsonFormat = (gendiffResult) => JSON.stringify(gendiffResult, null, 2);
+const json = (gendiffResult) => JSON.stringify(gendiffResult, null, 2);
 
-export default jsonFormat;
+export default json;

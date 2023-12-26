@@ -6,7 +6,6 @@ const getSign = (state) => {
     added: '+ ',
     default: '  ',
   };
-
   return signs[state] || signs.default;
 };
 
@@ -33,31 +32,29 @@ const formatValue = (value, depth) => {
 };
 
 const stylish = (gendiffResult, depth = 1) => {
-  const leftShift = 2;
-  const [currIndent, bracketIndent] = getIndent(depth, leftShift);
+  const [currIndent, bracketIndent] = getIndent(depth, 2);
 
   const formattedResult = _.map(gendiffResult, (item) => {
-    if (_.isArray(item.value)) {
-      const nestedResult = stylish(item.value, depth + 1);
-      return `${currIndent}${getSign(item.state)}${item.key}: ${nestedResult}`;
-    }
-
-    if (_.isObject(item.value)) {
-      const objectAsArray = _.map(item.value, (val, key) => ({ key, value: val }));
-      const nestedResult = stylish(objectAsArray, depth + 1);
+    if (item.state === 'nested') {
+      const children = item.value;
+      const nestedResult = stylish(children, depth + 1);
       return `${currIndent}${getSign(item.state)}${item.key}: ${nestedResult}`;
     }
 
     if (item.state === 'updated') {
-      const oldFormatVal = formatValue(item.oldValue, depth + 1);
-      const newFormatVal = formatValue(item.newValue, depth + 1);
-      const oldValue = `${currIndent}${getSign('removed')}${item.key}: ${oldFormatVal}`;
-      const newValue = `${currIndent}${getSign('added')}${item.key}: ${newFormatVal}`;
-      return `${oldValue}\n${newValue}`;
+      const formattedOldValue = `${currIndent}${getSign('removed')}${
+        item.key
+      }: ${formatValue(item.oldValue, depth + 1)}`;
+      const formattedNewValue = `${currIndent}${getSign('added')}${
+        item.key
+      }: ${formatValue(item.newValue, depth + 1)}`;
+      return `${formattedOldValue}\n${formattedNewValue}`;
     }
 
-    const formatItemVal = formatValue(item.value, depth + 1);
-    return `${currIndent}${getSign(item.state)}${item.key}: ${formatItemVal}`;
+    return `${currIndent}${getSign(item.state)}${item.key}: ${formatValue(
+      item.value,
+      depth + 1,
+    )}`;
   });
 
   return `{\n${formattedResult.join('\n')}\n${bracketIndent}}`;

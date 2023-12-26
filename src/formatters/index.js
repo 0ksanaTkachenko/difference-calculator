@@ -1,21 +1,16 @@
 import stylish from './stylish.js';
 import plain from './plain.js';
-import jsonFormat from './json.js';
+import json from './json.js';
+
+const formatters = {
+  stylish,
+  plain,
+  json,
+};
 
 const formatter = (gendiffResult, format) => {
-  if (format === 'stylish') {
-    return stylish(gendiffResult);
-  }
-
-  if (format === 'plain') {
-    return plain(gendiffResult);
-  }
-
-  if (format === 'json') {
-    return jsonFormat(gendiffResult);
-  }
-
-  return '';
+  const formatFunction = formatters[format];
+  return formatFunction(gendiffResult);
 };
 
 export default formatter;

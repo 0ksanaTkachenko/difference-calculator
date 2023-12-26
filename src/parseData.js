@@ -1,15 +1,14 @@
 import yaml from 'js-yaml';
 
+const parsers = {
+  '.json': JSON.parse,
+  '.yaml': yaml.load,
+  '.yml': yaml.load,
+};
+
 const dataParse = (readFileResult, fileExt) => {
-  if (fileExt === '.json') {
-    return JSON.parse(readFileResult);
-  }
-
-  if (fileExt === '.yaml' || fileExt === '.yml') {
-    return yaml.load(readFileResult);
-  }
-
-  return null;
+  const parser = parsers[fileExt];
+  return parser(readFileResult);
 };
 
 export default dataParse;
