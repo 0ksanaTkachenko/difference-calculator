@@ -4,8 +4,11 @@ import fs from 'fs';
 import dataParse from '../src/parseData.js';
 import formatter from '../src/formatters/index.js';
 
-const fileReader = (filepath) =>
-  fs.readFileSync(path.resolve(process.cwd(), filepath), 'utf8');
+const fileReader = (filepath) => {
+  const result = fs.readFileSync(path.resolve(process.cwd(), filepath), 'utf8');
+  return result;
+};
+
 const objectMaker = (key, value, state) => {
   if (state === 'updated') {
     const [oldValue, newValue] = value;
