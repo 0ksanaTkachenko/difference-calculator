@@ -6,7 +6,6 @@ import formatter from '../src/formatters/index.js';
 
 const fileReader = (filepath) =>
   fs.readFileSync(path.resolve(process.cwd(), filepath), 'utf8');
-
 const objectMaker = (key, value, state) => {
   if (state === 'updated') {
     const [oldValue, newValue] = value;
