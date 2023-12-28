@@ -1,13 +1,4 @@
 import _ from 'lodash';
-import path from 'path';
-import fs from 'fs';
-import dataParse from '../src/parseData.js';
-import formatter from '../src/formatters/index.js';
-
-const fileReader = (filepath) => {
-  const result = fs.readFileSync(path.resolve(process.cwd(), filepath), 'utf8');
-  return result;
-};
 
 const objectMaker = (key, value, state) => {
   if (state === 'updated') {
@@ -53,16 +44,4 @@ const compareData = (data1, data2) => {
   });
 };
 
-const genDiff = (filePath1, filePath2, format = 'stylish') => {
-  const file1Content = fileReader(filePath1);
-  const file2Content = fileReader(filePath2);
-
-  const parsedData1 = dataParse(file1Content, path.extname(filePath1));
-  const parsedData2 = dataParse(file2Content, path.extname(filePath2));
-
-  const diffResult = compareData(parsedData1, parsedData2);
-
-  return formatter(diffResult, format);
-};
-
-export default genDiff;
+export default compareData;

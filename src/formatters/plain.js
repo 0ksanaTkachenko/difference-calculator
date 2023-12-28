@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const ValueFormat = (value) => {
+const valueFormat = (value) => {
   const format = {
     string: `'${value}'`,
     object: value === null ? 'null' : '[complex value]',
@@ -10,10 +10,10 @@ const ValueFormat = (value) => {
 
 const formatDiffItem = (item, currentPath) => {
   const line = {
-    updated: `Property '${currentPath}' was updated. From ${ValueFormat(
+    updated: `Property '${currentPath}' was updated. From ${valueFormat(
       item.oldValue,
-    )} to ${ValueFormat(item.newValue)}`,
-    added: `Property '${currentPath}' was added with value: ${ValueFormat(item.value)}`,
+    )} to ${valueFormat(item.newValue)}`,
+    added: `Property '${currentPath}' was added with value: ${valueFormat(item.value)}`,
     removed: `Property '${currentPath}' was removed`,
     'not changed': [],
   };
