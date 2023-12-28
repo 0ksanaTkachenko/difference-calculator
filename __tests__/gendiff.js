@@ -24,7 +24,7 @@ const outputFormats = [
 fileFormats.forEach((fileFormat) => {
   describe(`genDiff tests for ${fileFormat} files`, () => {
     test.each(outputFormats)(
-      `должен корректно сравнивать два файла с указанным форматом вывода $format`,
+      'Should correctly compare two files with the specified output format $format',
       ({ format, expectedOutput }) => {
         const filePath1 = getFixturePath(`file1.${fileFormat}`);
         const filePath2 = getFixturePath(`file2.${fileFormat}`);
@@ -34,7 +34,7 @@ fileFormats.forEach((fileFormat) => {
       },
     );
 
-    test('должен корректно сравнивать два файла без указания формата', () => {
+    test('Should correctly compare two files without specifying a format', () => {
       const filePath1 = getFixturePath(`file1.${fileFormat}`);
       const filePath2 = getFixturePath(`file2.${fileFormat}`);
       const expected = getExpectedOutput('expectedStylish.txt');
