@@ -172,4 +172,4 @@ To run this console game, you will need:
 
 2. **npm:** Install npm (comes with Node.js). [Instructions for installing npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
-3. **Cross-Platform Compatibility:** This game is supported on all major operating systems (Windows, macOS, Linux).
+3. **Cross-Platform Compatibility:** This program is supported on all major operating systems (Windows, macOS, Linux).
